@@ -7,6 +7,7 @@ let User = require("./models/user");
 
 let jsontoken = require("jsonwebtoken");
 let app = myExpress();
+let path = require("path")
 // const multer  = require('multer')
 
 // const storage = multer.diskStorage({
@@ -47,6 +48,9 @@ app.use(myExpress.json());
 app.use(myExpress.static("./build"));
 app.use(myExpress.static("./mera-upload"));
 
+app.use(myExpress.urlencoded({ extended: false }))
+
+app.use(myExpress.static(path.join(__dirname, './build')));
 
 
 
@@ -249,7 +253,7 @@ app.post("/create-user", async (req, res) => {
     let nyaUser = new User(req.body);
     await nyaUser.save();
     res.json({ success: true });
-    
+
   } catch (e) {
     console.log(e);
   }
@@ -288,8 +292,12 @@ app.post("/create-user", async (req, res) => {
 // })
 
 
-
-
+// app.get("*",(req,res)=>{
+//   res.sendFile(myExpress.static(path.join(__dirname, "./build/index.html")))
+// })
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'))
+})
 
 
 app.listen(7080, () => {
