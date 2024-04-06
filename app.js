@@ -9,7 +9,6 @@ let jsontoken = require("jsonwebtoken");
 let app = myExpress();
 let path = require("path")
 // const multer  = require('multer')
-
 // const storage = multer.diskStorage({
 //     destination: function (req, file, cb) {
 
@@ -21,7 +20,7 @@ let path = require("path")
 //     }
 //   })
 
-//   const upload = multer({ storage: storage })
+  // const upload = multer({ storage: storage })
 
 
 // app.use(function (req, res, next) {
@@ -300,6 +299,6 @@ app.get('*', (req, res) => {
 })
 
 
-app.listen(7080, () => {
+app.listen(6070, () => {
   console.log("server chaling");
 });
