@@ -8,42 +8,8 @@ let User = require("./models/user");
 let jsontoken = require("jsonwebtoken");
 let app = myExpress();
 let path = require("path")
-// const multer  = require('multer')
-// const storage = multer.diskStorage({
-//     destination: function (req, file, cb) {
-
-//         cb(null, './mera-upload')
-
-//     },
-//     filename: function (req, file, cb) {
-//       cb(null, file.originalname)
-//     }
-//   })
-
-  // const upload = multer({ storage: storage })
-
-
-// app.use(function (req, res, next) {
-//   console.log("s");
-//   // res.json({});
-//   next();
-// });
-
-// app.use(function (req, res, next) {
-//   console.log("s");
-//   next();
-// });
-
-// app.use(function (req, res, next) {
-//   console.log("s");
-//   next();
-// });
-
-
 
 app.use(myExpress.json());
-// myExpress.static()
-// yeh express ko btata h kay kis folder m aapne files ko dekhna ha
 app.use(myExpress.static("./build"));
 app.use(myExpress.static("./mera-upload"));
 
@@ -139,7 +105,6 @@ app.post("/token-check", async (req, res) => {
 
     let user = await User.findOne({_id : data.meriABC});
 
-    // let user = users.find(user=>user.id == data.meriABC);
 
     res.json(user);
   });
@@ -149,8 +114,6 @@ app.post("/token-check", async (req, res) => {
 
 
 
-// req m hamesha incoming data hota h
-// like browser, android app, iOS App
 app.post("/login", async (req, res) => {
   let user = await User.findOne({
     name: req.body.name,
@@ -176,7 +139,6 @@ app.post("/login", async (req, res) => {
     );
   }
 
-  // res.end("yeh login tha")
 });
 
 let users = [
@@ -191,7 +153,6 @@ let users = [
 app.get("/get-user-by-id", async (req, res) => {
   let user = await User.findById(req.query.some);
 
-  // let user  = users.find(user=>user.id == req.query.some);
 
   res.json(user);
 });
@@ -201,19 +162,9 @@ app.put("/update-user", async (req, res) => {
 
   res.json({ success: true });
 
-  // let index = users.findIndex(user=>user.id == req.body.id);
-  // users[index] = req.body;
-  // console.log(req.body)
 });
 
 app.get("/users-lao", async (req, res) => {
-  // res.end()
-  // yeh string send karta
-  // res.sendFile()
-  // yeh file send karta h
-  // res.json()
-  //  yeh js wali koi bhi cheez like array ya object wagera
-
   let users = await User.find();
 
   res.json(users);
@@ -221,19 +172,6 @@ app.get("/users-lao", async (req, res) => {
 
 app.delete("/delete-user", async (req, res) => {
   await User.findByIdAndDelete(req.query.abc);
-
-  // let index = users.findIndex(function(user){
-
-  //     if(user.name ==  req.query.abc){
-  //         return true;
-  //     }
-
-  // })
-
-  // if(index != -1){
-  // users.splice(index, 1)
-  // }
-
   res.json({
     success: true,
   });
@@ -245,10 +183,8 @@ app.delete("/delete-user", async (req, res) => {
 
 
 
-// ,upload.array('dp', 10)
 app.post("/create-user", async (req, res) => {
   try {
-    // req.files[0].name = "asds";
     let nyaUser = new User(req.body);
     await nyaUser.save();
     res.json({ success: true });
@@ -257,43 +193,8 @@ app.post("/create-user", async (req, res) => {
     console.log(e);
   }
 
-  // let userParaHua = users.find(function(user){
-
-  //     if(user.name.toLowerCase() == req.body.name.toLowerCase()){
-  //         return true
-  //     }
-
-  // })
-
-  // if(userParaHua){
-
-  // res.status(409).json({});
-
-  // }else{
-
-  //     req.body.img = req.files[0].originalname;
-
-  //     users.push(req.body);
-
-  //     res.json({success:true});
-  // }
-
-  // console.log(req.body)
-  // console.log('data awat');
 });
 
-// app.get('/', (incoming, outgoing)=>{
-
-//     console.log(incoming.ip);
-
-//     outgoing.end('ok hogya')
-
-// })
-
-
-// app.get("*",(req,res)=>{
-//   res.sendFile(myExpress.static(path.join(__dirname, "./build/index.html")))
-// })
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'))
 })
